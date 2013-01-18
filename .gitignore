@@ -1,11 +1,15 @@
 *
 
+!/.gitignore
+!/.gitattributes
+
 !/com/
-!/com/gwtbits/com/
-!/com/gwtbits/com/*
-!/com/gwtbits/com/*/*
-!/com/gwtbits/com/*/*/*
-!/com/gwtbits/com/*/*/*/*
-!/com/gwtbits/com/*/*/*/*/*
+!/com/gwtbits/
+!/com/gwtbits/
+!/com/gwtbits/*
+!/com/gwtbits/*/*
+!/com/gwtbits/*/*/*
+!/com/gwtbits/*/*/*/*
+!/com/gwtbits/*/*/*/*/*
 
 
