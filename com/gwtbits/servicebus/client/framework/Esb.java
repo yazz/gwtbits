@@ -192,8 +192,16 @@ public class Esb implements IAgent {
     }
 
 
-
-
+    public static List<String> register(IAgent agent, double x, double y) {
+        List<String> ls = getInstance().instanceRegister(agent);
+        registerScreenPosition(agent,new RelativePoint(x,y));
+        return ls;
+    }
+    public static List<String> register(IAgent agent, RelativePoint rp) {
+        List<String> ls = getInstance().instanceRegister(agent);
+        registerScreenPosition(agent,rp);
+        return ls;
+    }
     public static List<String> register(IAgent agent) {
         return getInstance().instanceRegister(agent);
     }
