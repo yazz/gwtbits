@@ -1,8 +1,11 @@
 package com.gwtbits.servicebus.client.framework;
 
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.gwtbits.servicebus.client.framework.debug.DebugAgentToAgentMessageTotals;
+import com.gwtbits.servicebus.client.framework.debug.gui.DebugWindow;
 import com.gwtbits.servicebus.client.framework.debug.gui.RelativePoint;
 import com.gwtbits.servicebus.client.messages.MessageDummy;
+import com.gwtbits.servicebus.client.messages.MessageHideDebugWindow;
 import com.gwtbits.servicebus.client.messages.MessageSendPassword;
 import com.gwtbits.servicebus.client.messages.MessageSendUsername;
 
@@ -24,16 +27,28 @@ public class Esb implements IAgent {
 
 
 
+    public static DebugWindow   w = null;
+    public static PopupPanel    p = null;
+
+    static public void show() {
+        if (p == null) {
+            w = new DebugWindow();
+            p = new PopupPanel();
+            p.add(w);
+            p.setAutoHideEnabled(true);
+        }
+        p.show();
+    }
 
     /**
      * Create a singleton of the ESB
      */
-    private static Esb esb = null;
+    private static Esb esb = getInstance();
     public static Esb getInstance() {
         if (esb == null) {
             esb = new Esb();
             register(esb);
-            registerScreenPosition(esb,new RelativePoint(0.1, 0.5));
+            registerScreenPosition(esb, new RelativePoint(0.1, 0.5));
         }
         return esb;
     }
@@ -359,8 +374,10 @@ public class Esb implements IAgent {
     }
 
     @Override
-    public void receive(Message object) {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void receive(Message message) {
+        if (message.checkMessage(MessageHideDebugWindow.ONE)) {
+            p.hide();
+        }
     }
 
 
