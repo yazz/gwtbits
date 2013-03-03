@@ -24,15 +24,37 @@ public class Esb implements IAgent {
     private Map<String,List<IAgent>>    messageTypesAndAgents   = new HashMap<String,List<IAgent>>();
     private Map<String,Message>         messageTypesAndDetails  = new HashMap<String,Message>();
     private List<EsbHistoryItem>        history                 = new ArrayList<EsbHistoryItem>();
+    private Map<IAgent,RelativePoint>   defaultAgentScreenPositions= new HashMap<IAgent, RelativePoint>();
 
-
-
-    public static DebugWindow   w = null;
+    public static DebugWindow   w = new DebugWindow();
     public static PopupPanel    p = null;
 
-    static public void show() {
+
+
+    /**
+     * Create a singleton of the ESB
+     */
+    private Esb() {
+    }
+    private static Esb esb = getInstance();
+    private static Esb getInstance() {
+        if (esb == null) {
+            esb = new Esb();
+            register(esb, new RelativePoint(0.1, 0.5));
+        }
+        return esb;
+    }
+
+
+
+
+
+
+
+
+    static public void showDebugWindow() {
+
         if (p == null) {
-            w = new DebugWindow();
             p = new PopupPanel();
             p.add(w);
             p.setAutoHideEnabled(true);
@@ -40,31 +62,29 @@ public class Esb implements IAgent {
         p.show();
     }
 
-    /**
-     * Create a singleton of the ESB
-     */
-    private static Esb esb = getInstance();
-    public static Esb getInstance() {
-        if (esb == null) {
-            esb = new Esb();
-            register(esb);
-            registerScreenPosition(esb, new RelativePoint(0.1, 0.5));
-        }
-        return esb;
-    }
-
-    private Esb() {
-        int i=0;
-        i++;
-    }
 
 
-    private Map<IAgent,RelativePoint> defaultAgentScreenPositions= new HashMap<IAgent, RelativePoint>();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     public static void registerScreenPosition(IAgent agent,double x, double y) {
         getInstance().instanceRegisterScreenPosition(agent,new RelativePoint(x,y));
+    }
+    public static void registerEsbScreenPosition(RelativePoint rp) {
+        getInstance().instanceRegisterScreenPosition(getInstance(),rp);
     }
     public static void registerScreenPosition(IAgent agent,RelativePoint rp) {
         getInstance().instanceRegisterScreenPosition(agent,rp);
@@ -80,6 +100,11 @@ public class Esb implements IAgent {
         RelativePoint rp = defaultAgentScreenPositions.get(agent);
         return rp;
     }
+
+
+
+
+
 
 
     /**

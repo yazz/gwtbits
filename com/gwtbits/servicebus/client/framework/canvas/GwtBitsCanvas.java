@@ -18,7 +18,7 @@ public class GwtBitsCanvas extends Composite {
     Canvas backCanvas = Canvas.createIfSupported();
     Canvas canvas = Canvas.createIfSupported();
 
-    public int height = 600;
+    public int height = Window.getClientHeight() - 150;
     public int width = Window.getClientWidth() - 100;
     MouseOverCanvasItemHandler mouseOverAgentHandler = null;
 

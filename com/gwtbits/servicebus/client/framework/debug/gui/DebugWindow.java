@@ -32,15 +32,14 @@ public class DebugWindow extends Composite  implements IAgent{
         closeDebug.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-                Esb.sendFromAgent(DebugWindow.this, new MessageHideDebugWindow());
+            Esb.sendFromAgent(DebugWindow.this, new MessageHideDebugWindow());
             }
         });
         mainDebugPanel.add(closeDebug);
 
         initWidget(mainDebugPanel);
 
-        Esb.register(this);
-        Esb.registerScreenPosition(this,new RelativePoint(-1, 0.3));
+        Esb.register(this, new RelativePoint(0.5, 0.3));
     }
 
     public void unregisterFromEventBus() {
@@ -54,7 +53,7 @@ public class DebugWindow extends Composite  implements IAgent{
 
     @Override
     public String getAgentDescription() {
-        return "The debug window";
+        return "The debug window shows all the debug tabs";
     }
 
     @Override
