@@ -4,10 +4,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.gwtbits.servicebus.client.framework.debug.DebugAgentToAgentMessageTotals;
 import com.gwtbits.servicebus.client.framework.debug.gui.DebugWindow;
 import com.gwtbits.servicebus.client.framework.debug.gui.RelativePoint;
-import com.gwtbits.servicebus.client.messages.MessageDummy;
-import com.gwtbits.servicebus.client.messages.MessageHideDebugWindow;
-import com.gwtbits.servicebus.client.messages.MessageSendPassword;
-import com.gwtbits.servicebus.client.messages.MessageSendUsername;
+import com.gwtbits.servicebus.client.messages.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +56,8 @@ public class Esb implements IAgent {
             p.add(w);
             p.setAutoHideEnabled(true);
         }
+        MessageRefreshDebugWindow mr = new MessageRefreshDebugWindow();
+        sendFromAgent(getInstance(),mr);
         p.show();
     }
 

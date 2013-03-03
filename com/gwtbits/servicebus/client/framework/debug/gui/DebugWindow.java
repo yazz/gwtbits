@@ -8,9 +8,14 @@ import com.gwtbits.servicebus.client.framework.IAgent;
 import com.gwtbits.servicebus.client.framework.Message;
 import com.gwtbits.servicebus.client.messages.MessageHideDebugWindow;
 
+
+
+
 /**
+ * This is the main debug window that is shown. It contains the four main views
  */
 public class DebugWindow extends Composite  implements IAgent{
+
     VerticalPanel                   mainDebugPanel                  = new VerticalPanel();
     TabPanel                        tabPanel                        = new TabPanel();
     DebugMessagesWindow             debugMessagesWindow             = new DebugMessagesWindow();
@@ -18,15 +23,29 @@ public class DebugWindow extends Composite  implements IAgent{
     DebugAgentsWindow               debugAgentsWindow               = new DebugAgentsWindow();
     DebugAgentsMessagesMapWindow    debugAgentsMessagesMapWindow    = new DebugAgentsMessagesMapWindow();
 
-    public DebugWindow() {
-        mainDebugPanel.add(tabPanel);
-        tabPanel.add(debugAgentsWindow,"Agents");
-        tabPanel.add(debugMessagesWindow, "Messages");
-        tabPanel.add(debugMessagesHistoryWindow, "History");
-        tabPanel.add(debugAgentsMessagesMapWindow, "Map");
-        tabPanel.selectTab(0);
-        tabPanel.setAnimationEnabled(true);
 
+
+    public DebugWindow() {
+        init();
+        addDebugWindows();
+        addCloseButton();
+    }
+
+
+
+
+
+    private void init() {
+        initWidget(mainDebugPanel);
+
+        Esb.register(this, new RelativePoint(0.5, 0.3));
+    }
+
+
+
+
+
+    private void addCloseButton() {
         Button closeDebug = new Button();
         closeDebug.setText("Close");
         closeDebug.addClickHandler(new ClickHandler() {
@@ -36,15 +55,25 @@ public class DebugWindow extends Composite  implements IAgent{
             }
         });
         mainDebugPanel.add(closeDebug);
-
-        initWidget(mainDebugPanel);
-
-        Esb.register(this, new RelativePoint(0.5, 0.3));
     }
 
-    public void unregisterFromEventBus() {
-        Esb.unregister(debugMessagesWindow);
+
+
+
+
+    private void addDebugWindows() {
+        mainDebugPanel.add(tabPanel);
+        tabPanel.add(debugAgentsWindow,"Agents");
+        tabPanel.add(debugMessagesWindow, "Messages");
+        tabPanel.add(debugMessagesHistoryWindow, "History");
+        tabPanel.add(debugAgentsMessagesMapWindow, "Map");
+        tabPanel.selectTab(0);
+        tabPanel.setAnimationEnabled(true);
     }
+
+
+
+
 
     @Override
     public String getAgentName() {

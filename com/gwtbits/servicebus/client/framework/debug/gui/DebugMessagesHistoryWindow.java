@@ -9,24 +9,32 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.gwtbits.servicebus.client.framework.Esb;
 import com.gwtbits.servicebus.client.framework.EsbHistoryItem;
 import com.gwtbits.servicebus.client.framework.IAgent;
+import com.gwtbits.servicebus.client.framework.Message;
+import com.gwtbits.servicebus.client.messages.MessageRefreshDebugWindow;
 
 import java.util.List;
 
 /**
  */
-public class DebugMessagesHistoryWindow extends Composite  {
+public class DebugMessagesHistoryWindow extends Composite implements IAgent  {
+
     HorizontalPanel         mainMessagesPanel   = new HorizontalPanel();
     final VerticalPanel     propertyPanel       = new VerticalPanel();
     VerticalPanel           agentsPanel         = new VerticalPanel();
 
     public DebugMessagesHistoryWindow() {
+
         mainMessagesPanel.add(agentsPanel);
         mainMessagesPanel.add(propertyPanel);
 
         initWidget(mainMessagesPanel);
 
-        update();
+        Esb.register(this, 0.7,0.7);
     }
+
+
+
+
 
     public void update()  {
 
@@ -129,5 +137,22 @@ public class DebugMessagesHistoryWindow extends Composite  {
             });
 
 
+    }
+
+    @Override
+    public String getAgentName() {
+        return "DebugMessagesHistoryWindow";
+    }
+
+    @Override
+    public String getAgentDescription() {
+        return "Shows the history";
+    }
+
+    @Override
+    public void receive(Message message) {
+        if (message.checkMessage(MessageRefreshDebugWindow.ONE)) {
+            update();
+        }
     }
 }
